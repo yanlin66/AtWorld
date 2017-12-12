@@ -12,7 +12,10 @@ const editpassword = r => require.ensure([], () => r(require('../page/seat/editp
 const infor = r => require.ensure([], () => r(require('../page/my/children/infor')), 'infor');
 const mymoney = r => require.ensure([], () => r(require('../page/my/children/mymoney')), 'mymoney');
 const myprize = r => require.ensure([], () => r(require('../page/my/children/myprize')), 'myprize');
-
+const mycollection=r => require.ensure([], () => r(require('../page/my/children/mycollection')), 'mycollection');
+const myenroll=r => require.ensure([], () => r(require('../page/my/children/myenroll')), 'myenroll');
+const mygroom=r => require.ensure([], () => r(require('../page/my/children/mygroom')), 'mygroom');
+const mynotice=r => require.ensure([], () => r(require('../page/my/children/mynotice')), 'mynotice');
 
 export default [{
     path: '/',
@@ -53,11 +56,31 @@ export default [{
           path: '/mymoney',
           component: mymoney
         },
-        //我的钱包
+        //我的奖品
        {
           path: '/myprize',
           component: myprize
        },
+      //我的收藏
+      {
+        path: '/mycollection',
+        component: mycollection
+      },
+      //我的报名
+      {
+        path: '/mygroom',
+        component: mygroom
+      },
+      //我的推荐
+      {
+        path: '/myenroll',
+        component: myenroll
+      },
+      //我的消息
+      {
+        path: '/mynotice',
+        component: mynotice
+      },
         //设置
        {
          path: '/seat',

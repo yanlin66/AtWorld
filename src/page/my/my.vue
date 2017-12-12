@@ -61,14 +61,14 @@
             </a>
           </li>
           <li>
-            <a @click = "gotoAddress({path: '/home'})">
+            <a @click = "gotoAddress({path: '/mycollection'})">
               <i class="icon"></i>
               <span>我的收藏</span>
               <i class="qianjin-icon"></i>
             </a>
           </li>
           <li>
-            <a @click = "gotoAddress({path: '/home'})">
+            <a @click = "gotoAddress({path: '/myenroll'})">
               <i class="icon"></i>
               <span>我的报名</span>
               <i class="qianjin-icon"></i>
@@ -77,14 +77,14 @@
         </ul>
         <ul class="myhome-list-1">
           <li>
-            <a @click = "gotoAddress({path: '/home'})">
+            <a @click = "gotoAddress({path: '/mygroom'})">
               <i class="icon"></i>
               <span>我的推荐</span>
               <i class="qianjin-icon"></i>
             </a>
           </li>
           <li>
-            <a @click = "gotoAddress({path: '/home'})">
+            <a @click = "gotoAddress({path: '/mynotice'})">
               <i class="icon"></i>
               <span>消息通知</span>
               <i class="qianjin-icon"></i>
