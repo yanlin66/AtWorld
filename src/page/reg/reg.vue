@@ -47,11 +47,10 @@
         headerHtml:'注册'
       }
     },
-    computed: {
-
-    },
     mounted(){
-
+      $(".close-mask").click(function () {
+        $(".mask-warp").hide();
+      })
     },
     components:{
       headTop,protocolMask

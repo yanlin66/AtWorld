@@ -10,43 +10,10 @@
       <div class="groom-warp">
         <div class="groom-top">
           <ul>
-            <li>
-              <span class="g-two">2017-10-01</span>
-              <span class="g-three">转盘抽奖</span>
-              <span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span>
-              <span class="g-three">转盘抽奖</span>
-              <span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span>
-              <span class="g-three">转盘抽奖</span>
-              <span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span>
-              <span class="g-three">转盘抽奖</span>
-              <span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span><span class="g-three">转盘抽奖</span><span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span><span class="g-three">转盘抽奖</span><span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span><span class="g-three">转盘抽奖</span><span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span><span class="g-three">转盘抽奖</span><span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span><span class="g-three">转盘抽奖</span><span class="g-four">2元红包</span>
-            </li>
-            <li>
-              <span class="g-two">2017-10-01</span><span class="g-three">转盘抽奖</span><span class="g-four">2元红包</span>
+            <li  v-for="todo in myprize">
+              <span class="g-two">{{ todo.time }}</span>
+              <span class="g-three">{{ todo.name }}</span>
+              <span class="g-four">{{ todo.prize }}</span>
             </li>
           </ul>
         </div>
@@ -62,14 +29,23 @@
   export default {
     data(){
       return{
-        myinfo: {
-          name: sessionStorage.getItem("username") || localStorage.getItem('username'),
-          type: sessionStorage.getItem("usertype") || localStorage.getItem('usertype'),
-          yqm: sessionStorage.getItem("usererweima") || localStorage.getItem('usererweima'),
-          btmoney:sessionStorage.getItem("usermoney") || localStorage.getItem('usermoney'),
-          imgsrc:sessionStorage.getItem("usertx")  || localStorage.getItem('usertx'),
-          sex:sessionStorage.getItem("usersex")  || localStorage.getItem('usersex'),
-        }
+        myprize: [
+          {
+            time:'2017-12-01',
+            name:'转盘抽奖',
+            prize:'2元红包'
+          },
+          {
+            time:'2017-12-02',
+            name:'转盘抽奖',
+            prize:'10元红包'
+          },
+          {
+            time:'2017-12-03',
+            name:'转盘抽奖',
+            prize:'5元红包'
+          },
+        ]
       }
     },
     created () {

@@ -1,33 +1,27 @@
 <template>
     <header id='head_top'>
       <div class="h-return">
-        <i class="iconfont icon-tixing"></i>
+        <i class="iconfont icon-tixing" @click = "gotoAddress({path: '/mynotice'})"></i>
       </div>
       <div class="h-qd">
-        <i></i>
+        <i @click = "goSign()"></i>
       </div>
     </header>
 </template>
 
 <script>
+    import $ from 'src/plugins/jquery.min.js'
+
     export default {
-    	data(){
-            return{
-
-            }
-        },
-        mounted(){
-
-        },
-        computed: {
-
-        },
         methods: {
-
+          gotoAddress(path){
+            this.$router.push(path)
+          },
+          goSign(){
+            $(".mask-warp-index").show();
+          },
         },
-
     }
-
 </script>
 
 <style lang="scss" scoped>

@@ -81,6 +81,15 @@
           </div>
         </div>
       </div>
+
+      <!--签到-->
+      <div class="mask-warp-index">
+        <div class="mask-box">
+          <a @click = "gotoAddress({path: '/lottery'})" class="cj"></a>
+          <i class="mask-close iconfont icon-guanbi"></i>
+        </div>
+      </div>
+
       <foot-guide is-flag1="true"></foot-guide>
     </div>
 </template>
@@ -163,14 +172,21 @@ export default {
         that.activeIndex = 0;
       }
     }, 3000);
+
+    $(".mask-close").click(function () {
+      $(".mask-warp-index").hide();
+    })
   },
   components:{
     footGuide,headTop,
   },
   methods:{
-    workxq:function(path){
+    workxq(path){
       this.$router.push(path)
-    }
+    },
+    goSign(){
+      $(".mask-warp-index").show();
+    },
   }
 }
 </script>
@@ -330,5 +346,24 @@ export default {
       }
     }
   }
-  body .swiper-pagination-bullet{ background: #fff;}
+
+  //签到
+  .mask-warp-index{
+    width: 100%;position: fixed;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+    background-color: rgba(0,0,0,0.4);z-index: 9999;display: none;
+    .mask-box{
+      width: 5.48rem;height:6.5rem;border-radius: 10px;background-image:url(../../images/tankuang.jpg);
+      background-repeat: no-repeat;background-position: center;background-size: contain;
+      position: absolute;top:0;bottom: 0;left: 0;right: 0;margin: auto;
+      .cj{
+        display: block; position: absolute;bottom: .65rem;left: 0;right: 0;margin: auto;
+        width: 3rem;height: .88rem;
+      }
+      .mask-close{
+        font-size: .4rem;color: #fff;text-align: center;
+        position: absolute;bottom: -1.2rem;left: 0;right: 0;margin: auto;
+      }
+    }
+  }
+
 </style>

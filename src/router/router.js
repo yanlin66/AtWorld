@@ -12,10 +12,14 @@ const editpassword = r => require.ensure([], () => r(require('../page/seat/editp
 const infor = r => require.ensure([], () => r(require('../page/my/children/infor')), 'infor');
 const mymoney = r => require.ensure([], () => r(require('../page/my/children/mymoney')), 'mymoney');
 const myprize = r => require.ensure([], () => r(require('../page/my/children/myprize')), 'myprize');
-const mycollection=r => require.ensure([], () => r(require('../page/my/children/mycollection')), 'mycollection');
-const myenroll=r => require.ensure([], () => r(require('../page/my/children/myenroll')), 'myenroll');
-const mygroom=r => require.ensure([], () => r(require('../page/my/children/mygroom')), 'mygroom');
-const mynotice=r => require.ensure([], () => r(require('../page/my/children/mynotice')), 'mynotice');
+const mycollection =r => require.ensure([], () => r(require('../page/my/children/mycollection')), 'mycollection');
+const myenroll =r => require.ensure([], () => r(require('../page/my/children/myenroll')), 'myenroll');
+const mygroom =r => require.ensure([], () => r(require('../page/my/children/mygroom')), 'mygroom');
+const mynotice =r => require.ensure([], () => r(require('../page/my/children/mynotice')), 'mynotice');
+const erweima =r => require.ensure([], () => r(require('../page/my/children/erweima')), 'erweima');
+const person =r => require.ensure([], () => r(require('../page/recomend/person')), 'person');
+const profit =r => require.ensure([], () => r(require('../page/recomend/profit')), 'profit');
+const lottery =r => require.ensure([], () => r(require('../page/lottery/lottery')), 'lottery');
 
 export default [{
     path: '/',
@@ -51,6 +55,11 @@ export default [{
           path: '/infor',
           component: infor
         },
+        //抽奖
+        {
+          path: '/lottery',
+          component: lottery
+        },
         //我的钱包
         {
           path: '/mymoney',
@@ -75,6 +84,21 @@ export default [{
       {
         path: '/myenroll',
         component: myenroll
+      },
+      //我的二维码
+      {
+        path: '/erweima',
+        component: erweima
+      },
+      //推荐人数榜单
+      {
+        path: '/person',
+        component: person
+      },
+      //推荐收益榜单
+      {
+        path: '/profit',
+        component: profit
       },
       //我的消息
       {

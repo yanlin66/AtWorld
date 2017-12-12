@@ -17,18 +17,19 @@
   export default {
     data(){
       return{
-        time:'4'
+        time:'5'
       }
     },
     mounted(){
       let that=this;
-      //向上循环播放
-      setInterval(_ => {
+      let t=setInterval(_ => {
         that.time--;
         $("#time").html(that.time+'s关闭');
         if(that.time<1){
           that.time=4;
           $(".mask-warp").hide();
+          $("#time").html('请点击灰色背景关闭');
+          clearInterval(t);
         }
       }, 1000);
     },

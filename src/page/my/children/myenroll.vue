@@ -10,17 +10,17 @@
       <div class="enlist-warp">
         <ul>
           <!--这个li循环多少  下面那个就循环多少-->
-          <li>
+          <li  v-for="todo in instrus">
             <div class="enlist-con">
               <a href="javascript:;"></a>
               <div class="work-con">
-                <div class="w-left" style="background-image: url(image/work1.jpg)"></div>
+                <div class="w-left" v-bind:style="{backgroundImage: 'url('+todo.imgsrc+')'}"></div>
                 <div class="w-right">
-                  <div class="title">苏州品卓招售后客服 福利丰福福利丰福福利丰福</div>
-                  <div class="money">4000-5000</div>
+                  <div class="title">{{ todo.title }}</div>
+                  <div class="money">{{ todo.money }}</div>
                   <div class="w-bottom">
-                    <div class="w-type">已报名</div>
-                    <div class="w-seat"><i class="iconfont icon-timezone"></i>苏州市园区</div>
+                    <div class="w-type">{{todo.rztype}}</div>
+                    <div class="w-seat"><i class="iconfont icon-timezone"></i>{{ todo.eart }}</div>
                   </div>
                 </div>
               </div>
@@ -31,10 +31,10 @@
       </div>
       <!--上面li循环多少  下面就循环多少-->
       <div class="del-warp">
-        <a href="javascript:;"></a>
+        <a href="javascript:;"   v-for="todo in instrus"></a>
       </div>
     </div>
-    <a  @click = "gotoAddress({path: '/home'})" class="enlist-btn">去找职位</a>
+    <a  @click = "gotoAddress({path: '/worker'})" class="enlist-btn">去找职位</a>
   </div>
 </template>
 
@@ -49,16 +49,14 @@
             title:'UI-界面设计',
             imgsrc: 'http://palpitation.shop/public/images/work1.png',
             money:'4000-5000',
-            type:['五险一金','餐补','班车'],
-            num:'1560',
+            rztype:'已报名',
             eart:'苏州市园区',
           },
           {
             title:'WUI-前端开发',
             imgsrc: 'http://palpitation.shop/public/images/work2.png',
             money:'5000-6000',
-            type:['五险一金','餐补'],
-            num:'160',
+            rztype:'已入职',
             eart:'苏州市虎丘区',
           },
         ]
@@ -67,8 +65,60 @@
     created () {
 
     },
-    components:{
+    mounted(){
+      let that=this;
+      $(function () {
+        //侧滑显示删除按钮
+        let expansion = null; //是否存在展开的list
+        let container = document.querySelectorAll('.enlist-warp ul li');
+        for(let i = 0; i < container.length; i++){
+          let x, y, X, Y, swipeX, swipeY;
+          container[i].addEventListener('touchstart', function(event) {
+            x = event.changedTouches[0].pageX;
+            y = event.changedTouches[0].pageY;
+            swipeX = true;
+            swipeY = true ;
+            if(expansion){   //判断是否展开，如果展开则收起
+              expansion.className = "";
+              $(".del-warp").css("z-index","-1");
+            }
+          });
+          container[i].addEventListener('touchmove', function(event){
 
+            X = event.changedTouches[0].pageX;
+            Y = event.changedTouches[0].pageY;
+            // 左右滑动
+            if(swipeX && Math.abs(X - x) - Math.abs(Y - y) > 0){
+              // 阻止事件冒泡
+              event.stopPropagation();
+              if(X - x > 10){   //右滑
+                event.preventDefault();
+                this.className = "";    //右滑收起
+                $(".del-warp").css("z-index","-1");
+              }
+              if(x - X > 10){   //左滑
+                event.preventDefault();
+                this.className = "delleft";   //左滑展开
+                $(".del-warp").css("z-index","999");
+                expansion = this;
+              }
+              swipeY = false;
+            }
+            // 上下滑动
+            if(swipeY && Math.abs(X - x) - Math.abs(Y - y) < 0) {
+              swipeX = false;
+            }
+          });
+        }
+      });
+      $(".del-warp a").click(function () {
+        let index=$(this).index();
+        $(".enlist-warp ul li").removeClass("delleft").eq(index).remove();
+        $(".del-warp").css("z-index","-1");
+      });
+      $(".w-comment").click(function () {
+        alert("评论键盘");
+      })
     },
     methods: {
       gotoAddress(path){
@@ -101,78 +151,81 @@
     }
   }
 
-  .work-warp{
-    width: 100%;
-    .work-catgory{
-      width: 100%;height: .88rem;border-bottom: 1px solid #ddd;background-color: #fff;
-      ul{
-        width: 100%;height: 100%;
-        display: flex;display: -webkit-flex;justify-content: space-around;align-items: center;
-        li{
-          font-size: .24rem;color: #656565;position: relative;
-          i{
-            margin-left: .1rem;font-size: .24rem;
+  //我的报名
+  .enlist-warp{
+    width: 100%;background-color: #fff;
+    ul{
+      width: 100%;overflow: hidden;
+      li{
+        width: 120%;display: flex;display: -webkit-flex;
+        border-bottom: 1px solid #ddd;position: relative;
+        .enlist-con{
+          width: 84%;height: 2rem;background-color: #fff;padding: 0 .24rem;position: relative;
+          a{
+            position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 991;
           }
-        }
-        li:after{
-          content: "";position: absolute;right: -.2rem;top: 0;height: 100%;width: 1px;background-color: #ddd;
-        }
-        li:last-child:after{
-          content: "";width: 0;
-        }
-      }
-    }
-    .work-list{
-      width: 100%;background-color: #fff;padding: 0 .24rem;
-    }
-    .work-con{
-      width: 100%;padding: .2rem 0;border-bottom: 1px solid #f2f2f2;position: relative;
-      display: flex;display: -webkit-flex;justify-content: space-between;align-items: center;
-      .w-left{
-        width: 30%;height: 1.6rem;
-        img{
-          display: block;width: 100%;height: 100%;
-        }
-      }
-      .w-right{
-        width: 70%;height: 1.6rem;padding-left: .24rem;
-        .title{
-          width: 90%;font-size: .3rem;color: #282828;
-          overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
-        }
-        .money{
-          width: 100%;font-size: .28rem;color: #ff0101;line-height: .42rem;margin-bottom: .1rem;
-          span{
-            color: #686868;
-          }
-        }
-        .w-type{
-          width: 90%;height: .4rem;
-          li{
-            float: left;display: inline-block;margin-right: .2rem;
-            padding: 0 .15rem;font-size: .2rem;color: #FF9933;border-radius: .2rem;border: 1px solid #FF9933;line-height: 1.2;
-          }
-        }
-        .w-bottom{
-          width: 100%;
-          display: flex;display: -webkit-flex;justify-content: space-between;align-items: center;
-          .w-num{
-            font-size: .24rem;color: #989898;max-width: 40%;
-            overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
-          }
-          .w-seat{
-            font-size: .24rem;color: #989898;max-width: 60%;
-            overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
-            i{
-              color: #FF9933;font-size: .24rem;margin-right: .1rem;
+          .work-con{
+            width: 100%;padding: .2rem 0;border-bottom: 1px solid #ddd;
+            display: flex;display: -webkit-flex;justify-content: space-between;align-items: center;
+            .w-left{
+              width: 30%;height: 1.6rem;
+              background-position: center;background-repeat: no-repeat;background-size: contain;
+            }
+            .w-right{
+              width: 70%;height: 1.6rem;padding-left: .24rem;
+              .title{
+                width: 90%;font-size: .3rem;color: #282828;
+                overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+              }
+              .money{
+                width: 100%;font-size: .3rem;color: #ff0101;line-height: .6rem;
+              }
+              .w-bottom{
+                width: 100%;margin-top: .2rem;position: relative;
+                display: flex;display: -webkit-flex;justify-content: space-between;align-items: center;
+                .w-type{
+                  padding: 0 .2rem;font-size: .24rem;color: #f90;border-radius: .2rem;border: 1px solid #f90;line-height: 1.6;
+                }
+                .w-comment{
+                  position: absolute;left: 1.4rem;top: 0;font-size: .28rem;color: #989898;line-height: 1.6;z-index: 992;cursor: pointer;
+                  i{
+                    color: #686868;font-size: .3rem;margin-right: .1rem;
+                  }
+                }
+                .w-seat{
+                  font-size: .24rem;color: #989898;max-width: 60%;
+                  overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+                  i{
+                    color: #f90;font-size: .32rem;margin-right: .1rem;
+                  }
+                }
+              }
             }
           }
         }
+        .r-del{
+          width: 16%;height: 2rem;background-color: #ff6150;font-size: .3rem;color: #fff;
+          line-height: 2rem;text-align: center;
+        }
       }
-      .w-fl{
-        width: .35rem;height: .8rem;background: url(../../../images/list-fl.png) no-repeat center;
-        background-size: contain;position: absolute;top: 0;right: 0;
+      li:last-child{
+        border-bottom: none;
+      }
+      .delleft{
+        transform:translateX(-16%);-webkit-transform:translateX(-16%);
       }
     }
+  }
+  //删除按钮列表
+  .del-warp{
+    position: fixed;top: .88rem;right: 0;width: 20%;z-index: -1;
+    a{
+      display: block;width: 100%;height: 2rem;
+    }
+  }
+
+  .enlist-btn {
+    position: fixed;left: 0;right: 0;bottom: 0;height: 1rem;margin: auto;
+    text-align: center;line-height: 1rem;font-size: .3rem;  color: #fff;background-color: #f90;z-index: 999;
   }
 </style>
