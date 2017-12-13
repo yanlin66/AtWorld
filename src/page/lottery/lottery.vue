@@ -17,7 +17,7 @@
         <div class="day-bg">
           <img src="../../images/lottery/zj-bg.png">
           <div class="day-chance">
-            <span>今日剩余次数：<i>1</i></span>
+            <span>今日剩余次数：<i id="lotterynum">{{lottery}}</i></span>
             <div>每日分享可获得1-3次抽奖机会</div>
           </div>
           <ul class="day-zj">
@@ -50,10 +50,13 @@
   export default {
     data(){
       return{
+        lottery:localStorage.getItem('lotterynum'),
+        prize:'',
       }
     },
     mounted(){
-      /*
+      let that=this;
+    /*
     * prizetype值
     * 1是没中
     * 2是一元话费
@@ -70,7 +73,7 @@
         let steps = [];
         let lostDeg = [15, 60, 105, 150, 195, 240, 285, 330];
         let prizeDeg = [15, 60, 105,150];
-        let prize, sncode;
+        let sncode;
         //抽取次数
         let count = 0;
         let now = 0;
@@ -97,25 +100,17 @@
             running = false;
             setTimeout(function () {
               //console.log('正常运行-判断结果');
-              if (prize != null) {
-
-                //prize
-                prize=4;
-
+              if (that.prize != null) {
                 let type = "";
-                switch(prize)
-                {
-                  case 2:
-                    type = "1元话费";
-                    break;
-                  case 3:
-                    type = "2元话费";
-                    break;
-                  case 4:
-                    type = "100兆流量";
-                    break;
+                console.log(that.prize);
+                if(that.prize === '2'){
+                  alert('恭喜您抽中1元话费')
+                }else if(that.prize === '3'){
+                  alert('恭喜您抽中2元话费')
+                }else if(that.prize === '4'){
+                  alert('恭喜您抽中100兆流量')
                 }
-                alert('恭喜您抽中'+type)
+
               } else {
                 alert("不好意思，您未中奖，谢谢您的参与，下次再接再厉！");
               }
@@ -143,24 +138,28 @@
         }
 
         window.start = start;
-        outter = document.querySelector(".lottery-con");
+        outter = document.querySelector(".sign-con");
         inner = document.querySelector(".go-start");
         i = 10;
         $(".go-start").click(function () {
-          //  layer.msg('开始抽奖',{time:1000});
-          if (running) return;
-          //大于3次
-          if (count >= 3) {
-            layer.msg("您已经抽了 3 次奖。",{time:1000});
-            return
+          if($("#lotterynum").text()<1){
+            alert('抽奖次数不足');
+            return false;
           }
+          //抽奖次数处理
+          let lotterynum=$("#lotterynum").text()-1;
+          $("#lotterynum").text(lotterynum);
+          localStorage.setItem('lotterynum',lotterynum);
+
+
+          if (running) return;
+
           //运行代码
           $.ajax({
             dataType:"JSONP",
             jsonp:"callback",//请求自动带上callback参数，callback值为jsonpCallback的值
             jsonpCallback:"lottery",//接口服务器应该返回字符串数据格式：login(JSON数据)
-            url: "http://palpitation.shop/api/lottery.php",
-//                data: {t: Math.floor(Math.random()*8)},
+            url: "http://palpitation.shop/api/sign.php",
             beforeSend: function () {
               running = true;
               timer = setInterval(function () {
@@ -169,7 +168,6 @@
               }, 1)
             },
             success: function (data) {
-//              console.log(data);
               if (data.error == "invalid") {
                 alert("您今天已经抽了 3 次奖。");
                 count = 3;
@@ -177,20 +175,17 @@
                 return
               }
               if (data.success) {
-                //console.log(data.success);
-                prize = data.prizetype;
-//                console.log(prize);
-                //console.log("要中奖项序号为："+prize);
+                that.prize = data.prizetype;
                 start(prizeDeg[data.prizetype - 1])
               } else {
-                prize = null;
+                that.prize = null;
                 start(prizeDeg[0])
               }
               running = false;
               count++
             },
             error: function () {
-              prize = null;
+              that.prize = null;
               start(prizeDeg[0]);
               running = false;
               count++
@@ -270,10 +265,10 @@
         display: block;width: 100%;
       }
       .day-chance{
-        width: 100%;text-align: center;
-        position: absolute;left: 0;top: -.5rem;
+        width: 100%;text-align: center;padding-top: .15rem;
+        position: absolute;left: 0;top: 0;
         span{
-          font-size: .36rem;color: #f4e92b;line-height: 1;
+          font-size: .36rem;color: #f4e92b;display: block;height: .7rem;line-height: .7rem;
           i{
             color: #f4e92b;
           }

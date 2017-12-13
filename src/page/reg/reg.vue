@@ -76,7 +76,12 @@
         localStorage.setItem("username", author);
         localStorage.setItem("usertype", '普通登录');
         localStorage.setItem("usermoney", '100');
+        //活跃状态--影响送积分
+        localStorage.getItem('status','活跃中');
+        localStorage.getItem('statusnum','1');
+        localStorage.setItem('lotterynum','0');
         localStorage.setItem("usererweima", '8888');
+        localStorage.setItem("login-time",myDate.getTime());
         localStorage.setItem("reg-time", myDate.getTime());
         localStorage.setItem("usertx", 'http://palpitation.shop/public/images/tx/cs.jpg');
         //跳转首页

@@ -28,11 +28,6 @@
         yqm: this.$route.query.plan>0?sessionStorage.getItem("usererweima") : localStorage.getItem('usererweima')
       }
     },
-    created () {
-
-    },
-    components:{
-    },
     methods: {
       goback(){
         history.go(-1);

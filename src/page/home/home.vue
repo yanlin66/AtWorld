@@ -85,7 +85,7 @@
       <!--签到-->
       <div class="mask-warp-index">
         <div class="mask-box">
-          <a @click = "gotoAddress({path: '/lottery'})" class="cj"></a>
+          <a @click = "gotoAddress({path: '/sign'})" class="cj"></a>
           <i class="mask-close iconfont icon-guanbi"></i>
         </div>
       </div>

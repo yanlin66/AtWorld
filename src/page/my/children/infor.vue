@@ -15,37 +15,38 @@
           <div class="i-right" v-bind:style="{backgroundImage: 'url('+myinfo.imgsrc+')'}"></div>
         </div>
         <div class="info-type">
-          <span class="i-left">求职状态 </span>
+          <span class="i-left">账号状态 </span>
           <div class="i-right">
-            <input type="text" value="在职-暂不考虑" id="job" readonly="readonly"><i class="iconfont icon-qianjin-copy"></i>
+            <input type="text" v-bind:value="myinfo.status" name="status" disabled>
           </div>
         </div>
         <div class="infor-warp">
           <ul>
             <li>
               <span class="i-left">姓名 </span>
-              <label><input type="text" placeholder="请输入您的姓名" v-bind:value="myinfo.name"></label>
+              <label><input type="text" placeholder="请输入您的姓名" v-bind:value="myinfo.name" name="username" ></label>
             </li>
             <li>
               <span class="i-left">性别 </span>
               <div class="i-right">
-                <input type="text" v-bind:value="myinfo.sex" id="sex" readonly="readonly"><i class="iconfont icon-qianjin-copy"></i>
+                <input type="text" v-bind:value="myinfo.sex" name="sex"  placeholder="请选择性别">
+                <i class="iconfont icon-qianjin-copy"></i>
               </div>
             </li>
             <li>
               <span class="i-left">手机号 </span>
-              <label><input type="text" placeholder="请输入手机号" value="15826479226"></label>
+              <label><input type="tel" placeholder="请输入手机号" v-bind:value="myinfo.tel" name="tel" maxlength="11"></label>
             </li>
             <li>
               <span class="i-left">籍贯 </span>
               <div class="i-right">
-                <input id="city-picker" type="text" value="江苏省 苏州市" readonly="readonly">
+                <input id="city-picker" type="text" v-bind:value="myinfo.eart" name="eart"  placeholder="请选择籍贯">
                 <i class="iconfont icon-qianjin-copy"></i>
               </div>
             </li>
             <li>
               <span class="i-left">座右铭 </span>
-              <label><input type="text" placeholder="请输入小于7个字的座右铭" value=""></label>
+              <label><input type="text" placeholder="请输入小于10个字的座右铭" name="motto" maxlength="10"  v-bind:value="myinfo.motto"></label>
             </li>
           </ul>
         </div>
@@ -64,16 +65,43 @@
       return{
         myinfo: {
           name: sessionStorage.getItem("username") || localStorage.getItem('username'),
-          type: sessionStorage.getItem("usertype") || localStorage.getItem('usertype'),
-          yqm: sessionStorage.getItem("usererweima") || localStorage.getItem('usererweima'),
-          btmoney:sessionStorage.getItem("usermoney") || localStorage.getItem('usermoney'),
+          status: sessionStorage.getItem("status") || localStorage.getItem('status'),
+          tel:sessionStorage.getItem("tel") || localStorage.getItem('tel'),
+          eart:sessionStorage.getItem("eart") || localStorage.getItem('eart'),
           imgsrc:sessionStorage.getItem("usertx")  || localStorage.getItem('usertx'),
-          sex:sessionStorage.getItem("usersex")  || localStorage.getItem('usersex'),
+          sex:sessionStorage.getItem("sex")  || localStorage.getItem('sex'),
+          motto:sessionStorage.getItem("motto")  || localStorage.getItem('motto'),
         }
       }
     },
-    created () {
+    mounted() {
+      let that=this;
 
+      $(".i-save").click(function () {
+        if($("input[name='username']").val() === ''){
+          alert('请填写姓名');
+          return false;
+        }
+        if($("input[name='sex']").val() === ''){
+          alert('请选择性别');
+          return false;
+        }
+        if($("input[name='tel']").val() === ''){
+          alert('请填写手机号');
+          return false;
+        }
+        if($("input[name='eart']").val() === ''){
+          alert('请填写籍贯');
+          return false;
+        }
+
+        localStorage.setItem('username',$("input[name='username']").val());
+        localStorage.setItem('tel',$("input[name='tel']").val());
+        localStorage.setItem('eart',$("input[name='eart']").val());
+        localStorage.setItem('sex',$("input[name='sex']").val());
+        localStorage.setItem('motto',$("input[name='motto']").val());
+        alert('修改成功')
+      })
     },
     components:{
       footGuide,
@@ -133,12 +161,8 @@
         width: 50%;height: 100%;
         font-size: .3rem;color: #656565;position: relative;
         input{
-          display: block;width: 100%;padding-right: .35rem;height: 100%;background-color: rgba(0,0,0,0);
+          display: block;width: 100%;height: 100%;background-color: rgba(0,0,0,0);
           text-align: right;font-size: .3rem;position: relative;z-index: 99;
-        }
-        i{
-          position: absolute;top: 0;bottom: 0;right: 0;margin: auto;
-          font-size: .3rem;color: #656565;line-height: .88rem;
         }
       }
     }

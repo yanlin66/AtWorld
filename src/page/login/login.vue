@@ -125,7 +125,23 @@
                 num=0;
                 passwordnum=0;
                 //跳转首页
-                that.$router.push({ path: '/home'})
+                that.$router.push({ path: '/home'});
+                let myDate = new Date();//获取系统当前时间
+                localStorage.setItem("prve-login-time",localStorage.getItem("login-time"));
+                localStorage.setItem("login-time",myDate.getTime());
+                localStorage.setItem('statusnum','1');
+
+                //判断账号状态
+                let prvetime=localStorage.getItem("prve-login-time");
+                let acttime=localStorage.getItem("login-time");
+                localStorage.setItem('signstatus','');
+                let iDays = Math.floor(Math.abs(acttime-prvetime) / (24 * 3600 * 1000));
+
+                if(iDays >7){
+                  localStorage.setItem('status','休眠中')
+                }else{
+                  localStorage.setItem('status','激活中')
+                }
               }else{
                 num++;
                 localpassnum=1;

@@ -26,7 +26,7 @@
             </a>
           </div>
           <div class="box-in">
-            <a @click = "gotoAddress({path: '/lottery'})">
+            <a @click = "gotoAddress({path: '/sign'})">
               <img src="../../images/choujiang-icon.png">
               <span>去抽奖</span>
             </a>
@@ -96,7 +96,7 @@
     <!--签到-->
     <div class="mask-warp-index">
       <div class="mask-box">
-        <a @click = "gotoAddress({path: '/lottery'})" class="cj"></a>
+        <a @click = "gotoAddress({path: '/sign'})" class="cj"></a>
         <i class="mask-close iconfont icon-guanbi"></i>
       </div>
     </div>
@@ -114,11 +114,11 @@
       return{
         timeH:'',
         myinfo: {
-            name: this.$route.query.plan>0?sessionStorage.getItem("username") : localStorage.getItem('username'),
-            type: this.$route.query.plan>0?sessionStorage.getItem("usertype") : localStorage.getItem('usertype'),
-            yqm: this.$route.query.plan>0?sessionStorage.getItem("usererweima") : localStorage.getItem('usererweima'),
-            btmoney:this.$route.query.plan>0?sessionStorage.getItem("usermoney") : localStorage.getItem('usermoney'),
-            imgsrc:this.$route.query.plan>0?sessionStorage.getItem("usertx")  : localStorage.getItem('usertx'),
+            name: sessionStorage.getItem("username") || localStorage.getItem('username'),
+            type: sessionStorage.getItem("usertype") || localStorage.getItem('usertype'),
+            yqm: sessionStorage.getItem("usererweima") || localStorage.getItem('usererweima'),
+            btmoney:sessionStorage.getItem("usermoney")|| localStorage.getItem('usermoney'),
+            imgsrc:sessionStorage.getItem("usertx")  || localStorage.getItem('usertx'),
         },
         newjf:''
       }
@@ -126,12 +126,14 @@
     created () {
       let that=this;
       let newDate =new Date();
-      let EndTime = localStorage.getItem("reg-time"); //截止时间
+      let EndTime = localStorage.getItem("login-time"); //截止时间
       let NowTime = new Date();
       let t = NowTime.getTime()-EndTime;
       let h = Math.floor(t / 1000 / 60 / 60 % 24);
       let m = Math.floor(t / 1000 / 60 % 60);
-      that.newjf=parseInt(t / 1000 / 60 / 60)*10+100;
+      let cc=parseInt(localStorage.getItem('usermoney'));
+      that.newjf=parseInt(t / 1000 / 60 / 60)*10+cc;
+      localStorage.setItem('usermoney',that.newjf);
       if (m > 0) {
         that.timeH = (60-m)+'分钟';
       } else {
@@ -143,6 +145,12 @@
     },
     mounted() {
       let that=this;
+
+      //判断账号状态 如果休眠不显示倒计时
+      if(localStorage.getItem('status')==='休眠中'){
+        $(".myhome-warp .myhome-box .box-in:eq(2) span").html('已冻结');
+      }
+
       $("#btmoney").html(that.newjf);
       $(".mask-close").click(function () {
         $(".mask-warp-index").hide();
@@ -152,7 +160,16 @@
       gotoAddress(path){
         this.$router.push(path)
       },
-
+      goSign(){
+        if(localStorage.getItem('signstatus') === ''){
+          $(".mask-warp-index").show();
+          localStorage.setItem('signstatus','1');
+          let lotterynum=localStorage.getItem('lotterynum')+1;
+          localStorage.setItem('lotterynum',lotterynum);
+        }else{
+          alert('今日已签到')
+        }
+      },
     },
   }
 
