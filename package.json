@@ -1,8 +1,8 @@
 {
-  "name": "apzt",
+  "name": "AtWorld",
   "version": "1.0.0",
-  "description": "vue2-apzt",
-  "author": "Seek <137648904@qq.com>",
+  "description": "AtWorld",
+  "author": "Seek <zhang137648904@qq.com>",
   "private": true,
   "license": "Apache",
   "scripts": {
