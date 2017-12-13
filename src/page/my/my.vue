@@ -26,7 +26,7 @@
             </a>
           </div>
           <div class="box-in">
-            <a @click = "gotoAddress({path: '/sign'})">
+            <a @click = "gotoAddress({path: '/lottery'})">
               <img src="../../images/choujiang-icon.png">
               <span>去抽奖</span>
             </a>
@@ -96,7 +96,7 @@
     <!--签到-->
     <div class="mask-warp-index">
       <div class="mask-box">
-        <a @click = "gotoAddress({path: '/sign'})" class="cj"></a>
+        <a @click = "gotoAddress({path: '/lottery'})" class="cj"></a>
         <i class="mask-close iconfont icon-guanbi"></i>
       </div>
     </div>
@@ -161,7 +161,7 @@
         this.$router.push(path)
       },
       goSign(){
-        if(localStorage.getItem('signstatus') === ''){
+        if(localStorage.getItem('signstatus') === '0'){
           $(".mask-warp-index").show();
           localStorage.setItem('signstatus','1');
           let lotterynum=localStorage.getItem('lotterynum')+1;

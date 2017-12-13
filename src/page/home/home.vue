@@ -85,7 +85,7 @@
       <!--签到-->
       <div class="mask-warp-index">
         <div class="mask-box">
-          <a @click = "gotoAddress({path: '/sign'})" class="cj"></a>
+          <a @click = "gotoAddress({path: '/lottery'})" class="cj"></a>
           <i class="mask-close iconfont icon-guanbi"></i>
         </div>
       </div>
@@ -185,7 +185,14 @@ export default {
       this.$router.push(path)
     },
     goSign(){
-      $(".mask-warp-index").show();
+      if(localStorage.getItem('signstatus') === '0'){
+          $(".mask-warp-index").show();
+          localStorage.setItem('signstatus','1');
+          let lotterynum=localStorage.getItem('lotterynum')+1;
+          localStorage.setItem('lotterynum',lotterynum);
+        }else{
+          alert('今日已签到')
+        }
     },
   }
 }

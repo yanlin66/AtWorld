@@ -130,7 +130,7 @@
                 localStorage.setItem("prve-login-time",localStorage.getItem("login-time"));
                 localStorage.setItem("login-time",myDate.getTime());
                 localStorage.setItem('statusnum','1');
-
+				localStorage.setItem('signstatus','0');
                 //判断账号状态
                 let prvetime=localStorage.getItem("prve-login-time");
                 let acttime=localStorage.getItem("login-time");
