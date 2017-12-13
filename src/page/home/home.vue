@@ -1,6 +1,13 @@
 <template>
   	<div>
-      <head-top></head-top>
+      <header>
+        <div class="h-return">
+          <i class="iconfont icon-tixing" @click = "workxq({path: '/mynotice'})"></i>
+        </div>
+        <div class="h-qd">
+          <i @click = "goSign()"></i>
+        </div>
+      </header>
       <div class="main main-bg">
         <div class="index-warp">
           <!--banner-->
@@ -59,7 +66,7 @@
               <i class="iconfont icon-remen"></i>热门推荐
             </div>
             <div class="work-list">
-                <div class="work-con" v-for="todo in instrus.xjob" v-on:click="workxq({path: '/workdetails&id='+todo.id})">
+                <div class="work-con" v-for="todo in instrus.xjob" v-on:click="workxq({path: '/workdetails'})">
                   <div class="w-left" :style="{backgroundImage: 'url(' + todo.imgsrc + ')'}">
                     <div class="lt-tj"></div>
                   </div>
@@ -85,7 +92,7 @@
       <!--签到-->
       <div class="mask-warp-index">
         <div class="mask-box">
-          <a @click = "gotoAddress({path: '/lottery'})" class="cj"></a>
+          <a @click = "workxq({path: '/lottery'})" class="cj"></a>
           <i class="mask-close iconfont icon-guanbi"></i>
         </div>
       </div>
@@ -96,7 +103,6 @@
 
 <script>
   import footGuide from 'src/components/footer/footGuide'
-  import headTop from 'src/components/header/head'
   import $ from 'src/plugins/jquery.min.js'
   import 'src/plugins/swiper.min.js'
 export default {
@@ -175,10 +181,18 @@ export default {
 
     $(".mask-close").click(function () {
       $(".mask-warp-index").hide();
-    })
+    });
+    //头部显示
+    $(".main").scroll(function() {
+      if($(".main").scrollTop()>$(".banner").height()){
+        $("header").css({"background-color":"#f90"});
+      }else{
+        $("header").css({"background-color":"rgba(0,0,0,0)"});
+      }
+    });
   },
   components:{
-    footGuide,headTop,
+    footGuide,
   },
   methods:{
     workxq(path){
@@ -186,13 +200,13 @@ export default {
     },
     goSign(){
       if(localStorage.getItem('signstatus') === '0'){
-          $(".mask-warp-index").show();
-          localStorage.setItem('signstatus','1');
-          let lotterynum=localStorage.getItem('lotterynum')+1;
-          localStorage.setItem('lotterynum',lotterynum);
-        }else{
-          alert('今日已签到')
-        }
+        $(".mask-warp-index").show();
+        localStorage.setItem('signstatus','1');
+        let lotterynum=parseInt(localStorage.getItem('lotterynum'))+1;
+        localStorage.setItem('lotterynum',lotterynum);
+      }else{
+        alert('今日已签到')
+      }
     },
   }
 }
@@ -201,6 +215,36 @@ export default {
 <style lang="scss" scoped>
   @import '../../style/mixin';
   @import "../../style/swiper.min.css";
+
+  header{
+    width: 100%;height: .88rem;background-color: rgba(0, 0, 0, 0);
+    padding: 0 .24rem;position: fixed;top: 0;left: 0;z-index: 999;
+    .h-con{
+      width: 100%;height: 100%;line-height: .88rem;text-align: center;
+      font-size: .36rem;color: #fff;
+    }
+    .h-return{
+      position: absolute;left: .24rem;top: 0;height: .88rem;
+      i{
+        position: absolute;left: 0;top: 0;bottom: 0;margin: auto;
+        color: #fff;font-size: .4rem;line-height: .88rem;
+      }
+    }
+    .h-qd{
+      width: .45rem;height: .88rem;display: flex;display: -webkit-flex;align-items: center;
+      position: absolute;right: .24rem;top: 0;
+      i{
+        display: inline-block;cursor: pointer;
+        width: .45rem;height: .45rem;background: url(../../images/qiandao-icon.png) no-repeat center;
+        background-size: contain;
+      }
+    }
+  }
+
+  .main{
+    top: 0;
+  }
+
   //首页
   .index-warp{
     width: 100%;

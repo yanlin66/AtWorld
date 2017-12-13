@@ -2,6 +2,7 @@ import App from '../App';
 
 const home = r => require.ensure([], () => r(require('../page/home/home')), 'home');
 const worker = r => require.ensure([], () => r(require('../page/worker/worker')), 'worker');
+const workdetails = r => require.ensure([], () => r(require('../page/worker/child/details')), 'workdetails');
 const article = r => require.ensure([], () => r(require('../page/article/article')), 'article');
 const my = r => require.ensure([], () => r(require('../page/my/my')), 'my');
 const login = r => require.ensure([], () => r(require('../page/login/login')), 'login');
@@ -39,6 +40,10 @@ export default [{
         {
           path: '/worker',
           component: worker
+        },
+        {
+          path: '/workdetails',
+          component: workdetails
         },
         //安娉助手
         {

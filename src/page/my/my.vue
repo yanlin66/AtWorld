@@ -164,7 +164,7 @@
         if(localStorage.getItem('signstatus') === '0'){
           $(".mask-warp-index").show();
           localStorage.setItem('signstatus','1');
-          let lotterynum=localStorage.getItem('lotterynum')+1;
+          let lotterynum=parseInt(localStorage.getItem('lotterynum'))+1;
           localStorage.setItem('lotterynum',lotterynum);
         }else{
           alert('今日已签到')

@@ -13,7 +13,7 @@
             </ul>
           </div>
           <div class="work-list">
-              <div class="work-con"  v-for="todo in instrus">
+              <div class="work-con"  v-for="todo in instrus" @click = "workxq({path: '/workdetails'})">
                 <div class="w-left"><img v-bind:src="todo.imgsrc"></div>
                 <div class="w-right">
                   <div class="title">{{ todo.title }}</div>
@@ -86,9 +86,12 @@ export default {
 
     methods:{
         //点击图标刷新页面
-        reload(){
-            window.location.reload();
-        }
+      reload(){
+        window.location.reload();
+      },
+      workxq(path){
+        this.$router.push(path)
+      },
     },
 }
 

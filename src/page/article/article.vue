@@ -1,44 +1,84 @@
 <template>
   <div>
-    <head-top3></head-top3>
+    <header id='head_top3'>
+      <div class="h-con">
+        AtWorld-Help
+      </div>
+    </header>
     <div class="main main-bg">
       <div class="ap-help">
-        <ul class="clear">
+        <img class="apzs-bg" src="../../images/apzs/apzs-bg.png">
+        <ul class="ap-type1">
           <li>
-            <img src="../../images/zs1.jpg">
-            <div>入职风采</div>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/rztp.png">
+                <span>Help风采</span>
+              </a>
+            </div>
           </li>
           <li>
-            <img src="../../images/zs2.jpg">
-            <div>报名网点</div>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/bmwd.png">
+                <span>Help网点</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+        <ul class="ap-type2">
+          <li>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/new.png">
+                <span>新手指导</span>
+              </a>
+            </div>
           </li>
           <li>
-            <img src="../../images/zs3.jpg">
-            <div>新手入职</div>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/pingtai.png">
+                <span>常见问题</span>
+              </a>
+            </div>
           </li>
           <li>
-            <img src="../../images/zs4.jpg">
-            <div>常见问题</div>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/zhuanqian.png">
+                <span>分享抽奖</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+        <ul class="ap-type2">
+          <li>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/falvyuanzhu.png">
+                <span>Help声明</span>
+              </a>
+            </div>
           </li>
           <li>
-            <img src="../../images/zs5.jpg">
-            <div>平台介绍</div>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/wenti.png">
+                <span>法律援助</span>
+              </a>
+            </div>
           </li>
           <li>
-            <img src="../../images/zs6.jpg">
-            <div>分享赚钱</div>
-          </li>
-          <li>
-            <img src="../../images/zs7.jpg">
-            <div>我要投诉</div>
-          </li>
-          <li>
-            <img src="../../images/zs8.jpg">
-            <div>法律援助</div>
+            <div>
+              <a @click = "gotoAddress({path: '/lottery'})">
+                <img src="../../images/apzs/tousu.png">
+                <span>我要投诉</span>
+              </a>
+            </div>
           </li>
         </ul>
       </div>
-      <div style="height: 1.2rem"></div>
     </div>
     <foot-guide  is-flag3="true"></foot-guide>
   </div>
@@ -46,7 +86,6 @@
 
 <script>
   import footGuide from 'src/components/footer/footGuide'
-  import headTop3 from 'src/components/header/head-article'
   import 'src/plugins/swiper.min.js'
   export default {
     data(){
@@ -54,36 +93,110 @@
 
       }
     },
-
     components:{
-      footGuide,headTop3,
+      footGuide,
     },
-
+    methods: {
+      gotoAddress(path){
+        this.$router.push(path)
+      },
+    },
   }
 
 </script>
 
 <style lang="scss" scoped>
   @import '../../style/mixin';
-  @import "../../style/swiper.min.css";
 
-  //安娉助手
-  .ap-help{
-    width: 100%;padding: .3rem .24rem 0;
-    ul{
-      width: 100%;
-      li{
-        width: 48.5%;position: relative;float: left;margin-right: 3%;margin-bottom: .2rem;
-        img{
-          display: block;width: 100%;border-radius: 5px;
-        }
-        div{
-          position: absolute;top: 0;left: 0;width: 100%;height: 100%;padding: 1rem;font-size: .32rem;color: #fff;line-height: inherit;
-        }
-      }
-      li:nth-child(2n){
-        margin-right: 0;
-      }
+  header{
+    width: 100%;height: 5rem;background-color: rgba(0,0,0,0);
+    padding: 0 .24rem;position: fixed;top: 0;left: 0;z-index: 999;
+    .h-con{
+      width: 100%;height: 100%;line-height: 5rem;text-align: center;
+      font-size: .6rem;color: #fff;font-weight: 600;
     }
+  }
+  .main{
+    top: 0;
+  }
+  //安娉助手
+  .ap-help {
+    width: 100%;
+  }
+  .ap-help .apzs-bg {
+    display: block;
+    width: 100%;
+  }
+  .ap-help .ap-type1 {
+    width: 100%;
+    margin: .1rem 0;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ap-help .ap-type1 li {
+    width: 49%;
+    position: relative;
+    float: left;
+    height: 2rem;
+    background-color: #fff;
+    border-radius: .3rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .ap-help .ap-type1 li div a {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .ap-help .ap-type1 li div a img {
+    width: 1.1rem;
+    margin-right: .2rem;
+  }
+  .ap-help .ap-type1 li div a span {
+    font-size: .28rem;
+    color: #989898;
+  }
+  .ap-help .ap-type2 {
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .1rem;
+  }
+  .ap-help .ap-type2 li {
+    width: 32.5%;
+    position: relative;
+    float: left;
+    height: 2rem;
+    background-color: #fff;
+    border-radius: .3rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .ap-help .ap-type2 li div a {
+    text-align: center;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .ap-help .ap-type2 li div a img {
+    width: .8rem;
+    height: .8rem;
+    display: block;
+    margin-bottom: .2rem;
+  }
+  .ap-help .ap-type2 li div a span {
+    font-size: .28rem;
+    color: #989898;
   }
 </style>

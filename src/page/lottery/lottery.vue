@@ -9,7 +9,16 @@
       <div class="lottery-draw">
         <div class="lottery-warp">
           <!--转盘内容-->
-          <div class="lottery-con"></div>
+          <div class="lottery-con">
+            <div class="lottery-jp"><img src="../../images/lottery/668.png"></div>
+            <div class="lottery-jp"><img src="../../images/lottery/661.png"></div>
+            <div class="lottery-jp"><img src="../../images/lottery/662.png"></div>
+            <div class="lottery-jp"><img src="../../images/lottery/663.png"></div>
+            <div class="lottery-jp"><img src="../../images/lottery/664.png"></div>
+            <div class="lottery-jp"><img src="../../images/lottery/665.png"></div>
+            <div class="lottery-jp"><img src="../../images/lottery/666.png"></div>
+            <div class="lottery-jp"><img src="../../images/lottery/667.png"></div>
+          </div>
           <div class="go-start"></div>
         </div>
         <div class="lottery-down"></div>
@@ -20,20 +29,13 @@
             <span>今日剩余次数：<i id="lotterynum">{{lottery}}</i></span>
             <div>每日分享可获得1-3次抽奖机会</div>
           </div>
-          <ul class="day-zj">
-            <li>
-              <span>张三</span><span>157XXXX6621</span><span>phone8一台</span>
-            </li>
-            <li>
-              <span>张三</span><span>157XXXX6621</span><span>phone8一台</span>
-            </li>
-            <li>
-              <span>张三</span><span>157XXXX6621</span><span>phone8一台</span>
-            </li>
-            <li>
-              <span>张三</span><span>157XXXX6621</span><span>phone8一台</span>
-            </li>
-          </ul>
+          <div class="day-zj" id="scroll_div">
+            <ul id="inwarp_scroll">
+              <li v-for="todo in addinfo">
+                <span>{{todo.name}}</span><span>{{todo.tel}}</span><span>{{todo.aprize}}</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <!--活动说明-->
@@ -52,17 +54,45 @@
       return{
         lottery:localStorage.getItem('lotterynum'),
         prize:'',
+        activeIndex: 0,
+        addinfo:[
+          {
+            name:'张三',
+            tel:'159XXXX3621',
+            aprize:'电动剃须刀'
+          },{
+            name:'李四',
+            tel:'186XXXX5421',
+            aprize:'phone8'
+          },{
+            name:'王麻子',
+            tel:'168XXXX8688',
+            aprize:'16G U盘'
+          },{
+            name:'赵六',
+            tel:'150XXXX6621',
+            aprize:'红包2元'
+          },{
+            name:'龙七',
+            tel:'155XXXX1766',
+            aprize:'红包1元'
+          },
+
+        ],
       }
     },
     mounted(){
       let that=this;
-    /*
-    * prizetype值
-    * 1是没中
-    * 2是一元话费
-    * 3是二元话费
-    * 4是100M流量
-    * */
+      //向上循环播放
+      setInterval(function (){
+          let ul=$('#inwarp_scroll');
+          let liFirst=ul.find('li:first');
+          $('#inwarp_scroll').animate({top:'-.6rem'}).animate({"top":0},0,function(){
+            var clone=liFirst.clone();
+            $('#inwarp_scroll').append(clone);
+            liFirst.remove();
+          })
+      },4000);
       $(function () {
         window.requestAnimFrame = (function () {
           return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
@@ -82,24 +112,20 @@
 
         function countSteps() {
           let t = Math.sqrt(2 * totalDeg / a);
-          //console.log('接受传来的初始度数：'+totalDeg);
           let v = a * t;
           for (i = 0; i < t; i++) {
             steps.push((2 * v * i - a * i * i) / 2);
           }
           steps.push(totalDeg);
-          //console.log('最后添加旋转角度：'+totalDeg)
         }
         function step() {
           outter.style.webkitTransform = 'rotate(' + steps[now++] + 'deg)';
-          //console.log('rotate(' + steps[now++] + 'deg)');
           if (now < steps.length) {
             requestAnimFrame(step)
           } else {
             //console.log('大转盘开始按钮再次点击按钮open');
             running = false;
             setTimeout(function () {
-              //console.log('正常运行-判断结果');
               if (that.prize != null) {
                 let type = "";
                 console.log(that.prize);
@@ -110,7 +136,6 @@
                 }else if(that.prize === '4'){
                   alert('恭喜您抽中100兆流量')
                 }
-
               } else {
                 alert("不好意思，您未中奖，谢谢您的参与，下次再接再厉！");
               }
@@ -122,7 +147,6 @@
         function start(deg) {
           //console.log('开始执行大转盘');
           deg = deg || lostDeg[parseInt((lostDeg.length)/2 * Math.random())];
-          //console.log('随机deg:'+parseInt((lostDeg.length)/2 * Math.random()));
           running = true;
           //console.log('大转盘开始按钮再次点击按钮失效');
           clearInterval(timer);
@@ -138,7 +162,7 @@
         }
 
         window.start = start;
-        outter = document.querySelector(".sign-con");
+        outter = document.querySelector(".lottery-con");
         inner = document.querySelector(".go-start");
         i = 10;
         $(".go-start").click(function () {
@@ -159,13 +183,13 @@
             dataType:"JSONP",
             jsonp:"callback",//请求自动带上callback参数，callback值为jsonpCallback的值
             jsonpCallback:"lottery",//接口服务器应该返回字符串数据格式：login(JSON数据)
-            url: "http://palpitation.shop/api/sign.php",
+            url: "http://palpitation.shop/api/lottery.php",
             beforeSend: function () {
               running = true;
               timer = setInterval(function () {
                 i += 5;
                 outter.style.webkitTransform = 'rotate(' + i + 'deg)';
-              }, 1)
+              }, 10)
             },
             success: function (data) {
               if (data.error == "invalid") {
@@ -248,7 +272,7 @@
       background-repeat: no-repeat;background-position: center;background-size: contain;
       .lottery-con{
         width: 5rem;height: 5rem;position: absolute;left: 0;top: 0;right: 0;bottom: 0;margin: auto;
-        background-repeat: no-repeat;background-position: center;background-size: contain;background-image: url(../../images/lottery/lottery-con-add.png);
+        background-repeat: no-repeat;background-position: center;background-size: contain;background-image: url(../../images/lottery/lottery-conbg-new.png);
       }
       .go-start{
         width: 2.2rem;height: 2.2rem;position: absolute;left: 0;top: 0;right: 0;bottom: 0;margin: auto;background-image: url(../../images/lottery/rotate-static.png);
@@ -286,8 +310,65 @@
           span{
             font-size: .28rem;color: #fff;line-height: .6rem;
           }
+          span:first-child{
+            width: 25%;text-align: left;
+          }
+          span:last-child{
+            width: 33%;text-align: center;
+          }
         }
       }
     }
+  }
+  .cj-rule{
+    width: 100%;padding:.1rem .36rem;border-radius: 10px;
+  }
+  .cj-rulewarp{
+    border: .12rem solid #fea676;
+    width: 100%;background-color: #f9f8d9;font-size: .24rem;padding: .36rem;border-radius: 10px;line-height: 1.6;
+  }
+  .day-zj{
+    overflow: hidden;
+  }
+  .day-bg #inwarp_scroll{
+    color: #fff;
+    height: auto;
+    position: absolute;
+    z-index: 9999;
+    left: .6rem;
+    right: .6rem;
+    top: 0;
+    margin: auto;
+  }
+  .lottery-jp{
+    width: 100%;height:100%;position: absolute;padding-top: .1rem;
+    display: flex;display: -webkit-flex;justify-content: center;align-items: flex-start;
+  }
+  .lottery-jp>img{
+    width: 33.3%;
+  }
+  .lottery-jp:nth-child(1){
+    transform: rotate(22.5deg);
+  }
+  .lottery-jp:nth-child(2){
+    transform: rotate(67.5deg);
+  }
+  .lottery-jp:nth-child(3){
+    transform: rotate(112.5deg);
+  }
+  .lottery-jp:nth-child(4){
+    transform: rotate(157.5deg);
+  }
+  .lottery-jp:nth-child(5){
+    transform: rotate(202.5deg);
+  }
+  .lottery-jp:nth-child(6){
+    transform: rotate(247.5deg);
+  }
+  .lottery-jp:nth-child(7){
+    transform: rotate(292.5deg);
+  }
+  .lottery-jp:nth-child(8){
+    transform: rotate(337.5deg);
   }
 </style>

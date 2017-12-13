@@ -58,14 +58,10 @@
         }
       });
     },
-    computed: {
-
-    },
     mounted(){
       //验证码
 //      let verifyCode=new GVerify("v_container");
 //      this.res = verifyCode.validate(document.getElementById("code_input").value);
-
     },
     components:{
       headTop,
@@ -92,6 +88,8 @@
         //判断输入次数
         if(num < 4){
             //遍历数据源 查询是否匹配到
+            /*
+
             this.addinfo.forEach(function(value,index,array){
               if($(".l-phone").val() === value.links.author){
                 if($(".l-passward").val() === value.links.passward){
@@ -118,6 +116,7 @@
               }
             });
 
+            */
             //匹配本地数据
             if($(".l-phone").val() === localStorage.getItem('l-phone')){
               if($(".l-passward").val() === localStorage.getItem('l-password')){
@@ -130,7 +129,8 @@
                 localStorage.setItem("prve-login-time",localStorage.getItem("login-time"));
                 localStorage.setItem("login-time",myDate.getTime());
                 localStorage.setItem('statusnum','1');
-				localStorage.setItem('signstatus','0');
+				        localStorage.setItem('signstatus',0);
+                localStorage.setItem('lotterynum',0);
                 //判断账号状态
                 let prvetime=localStorage.getItem("prve-login-time");
                 let acttime=localStorage.getItem("login-time");
