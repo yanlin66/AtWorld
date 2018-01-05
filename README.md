@@ -25,4 +25,4 @@ vue2.0脚手架 <br />
 Mysql数据库
 
 #### 预览地址
-[AtWorld](http://palpitation.shop/AtWorld/ "周边天下") 
+[AtWorld](http://palpitation.shop/web/AtWorld/ "周边天下") 
